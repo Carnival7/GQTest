@@ -20,7 +20,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self createLoginVC];
     
     [_userName addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -29,7 +28,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuWillBeShown:) name:UIMenuControllerWillShowMenuNotification object:nil];
 }
 
-//界面初始化
+#pragma mark - /************************* 界面初始化 ***************************/
 -(void) createLoginVC {
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -39,7 +38,6 @@
     userLogo.contentMode = UIViewContentModeScaleAspectFit;
     userLogo.image = [UIImage imageNamed:@"loginName"];
     [self.view addSubview:userLogo];
-    
     [userLogo mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(35);
         make.top.equalTo(self.view).offset(160);
@@ -54,7 +52,6 @@
     _userName.layer.cornerRadius = 2;
     _userName.layer.borderColor = [UIColor hexStringToColor:@"#cccccc"].CGColor;
     [self.view addSubview:_userName];
-    
     [_userName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(userLogo.mas_right).offset(20);
         make.right.equalTo(self.view).offset(-25);
@@ -72,19 +69,16 @@
         make.height.mas_equalTo(0.5);
     }];
     
-    
     //密码输入框
     UIImageView *passLogo = [[UIImageView alloc]init];
     passLogo.contentMode = UIViewContentModeScaleAspectFit;
     passLogo.image = [UIImage imageNamed:@"loginPassword"];
     [self.view addSubview:passLogo];
-    
     [passLogo mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(35);
         make.top.equalTo(_userName.mas_bottom).offset(0);
         make.size.mas_equalTo(CGSizeMake(18, 50));
     }];
-    
     
     _passWord = [[UITextField alloc]init];
     _passWord.placeholder = @"请输入密码";
@@ -95,7 +89,6 @@
     _passWord.layer.cornerRadius = 2;
     _passWord.layer.borderColor = [UIColor hexStringToColor:@"#cccccc"].CGColor;
     [self.view addSubview:_passWord];
-    
     [_passWord mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(passLogo.mas_right).offset(20);
         make.right.equalTo(self.view).offset(-60);
@@ -103,33 +96,26 @@
         make.height.mas_equalTo(50);
     }];
     
-    
-    
     UIButton *passEye = [UIButton buttonWithType:UIButtonTypeCustom];
     [passEye setImage:[UIImage imageNamed:@"passcode"] forState:UIControlStateNormal];
     [passEye addTarget:self action:@selector(passEyePassword:) forControlEvents:UIControlEventTouchUpInside];
     passEye.titleLabel.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:passEye];
-    
     [passEye mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view).offset(-15);
         make.top.equalTo(_userName.mas_bottom).offset(0);
         make.size.mas_equalTo(CGSizeMake(36, 50));
     }];
     
-    
     UIView *bottomLine2 = [[UIView alloc]init];
     bottomLine2.backgroundColor = [UIColor clearColor];
     [self.view addSubview:bottomLine2];
-    
     [bottomLine2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(25);
         make.right.equalTo(self.view).offset(-25);
         make.top.equalTo(passLogo.mas_bottom).offset(0);
         make.height.mas_equalTo(0.5);
     }];
-    
-    
     
     //登录按键
     _loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -139,7 +125,6 @@
     [_loginBtn setUserInteractionEnabled:NO];
     _loginBtn.backgroundColor = [UIColor hexStringToColor:@"#cccccc"];
     [self.view addSubview:_loginBtn];
-    
     [_loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(25);
         make.right.equalTo(self.view).offset(-25);
@@ -165,8 +150,6 @@
         [_passWord setValue:[UIFont systemFontOfSize:15] forKeyPath:@"_placeholderLabel.font"];
         _loginBtn.titleLabel.font  = [UIFont systemFontOfSize:17];
     }
-    
-    
 }
 
 
@@ -196,7 +179,6 @@
         }
         // 有高亮选择的字符串，则暂不对文字进行统计和限制
         else{
-            
         }
     }
     // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
@@ -205,7 +187,6 @@
             textField.text = [toBeString substringToIndex:kMaxLength];
         }
     }
-    
     [self checkInfo];
 }
 
@@ -253,7 +234,7 @@
 - (void)tapLogin:(id)sender {
     NSString *phoneStr = [_userName.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     NSString *passWordStr = [_passWord.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        
+    
     if (![phoneStr isEqualToString:@"sunshijia"]) {
         _userName.layer.borderColor = [UIColor redColor].CGColor;
     }else{
@@ -265,7 +246,7 @@
     }else{
         _passWord.layer.borderColor = [UIColor hexStringToColor:@"#cccccc"].CGColor;
     }
-   
+    
     if ([phoneStr isEqualToString:@"sunshijia"] && [passWordStr isEqualToString:@"7777777"]) {
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -273,7 +254,6 @@
 
 
 #pragma mark -- textField delegate
-
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self.view endEditing:YES];
     return YES;

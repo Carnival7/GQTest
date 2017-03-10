@@ -30,5 +30,7 @@
 #import "Masonry.h"
 #import "UIImageView+WebCache.h"
 #import "YYModel.h"
+#import "HTTPManager.h"
+#import "HTTPTools.h"
 
 #endif /* DailyTraining_pch */

@@ -1,9 +1,9 @@
 //
 //  HomeVC.m
-//  Daodao
+//  DailyTraining
 //
-//  Created by 郝凡宁 on 15/9/16.
-//  Copyright (c) 2015年 东道道. All rights reserved.
+//  Created by 孙琪 on 2017/3/8.
+//  Copyright © 2017年 七. All rights reserved.
 //
 
 #import "HomeVC.h"
@@ -21,15 +21,6 @@
 
 @implementation HomeVC
 
-- (NSArray *)dataArr
-{
-    if (!_dataArr) {
-        _dataArr = [NSArray array];
-    }
-    return _dataArr;
-}
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -37,8 +28,68 @@
     [self createNav];
     [self addTableView];
     [self infoDic];
+    [self sendWeatherRequest];
 }
 
+#pragma mark - /************************* 界面初始化 ***************************/
+/**
+ *  初始化导航栏
+ */
+-(void)createNav{
+    
+    // 头部logo
+    UIImageView *titleView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 31, 26)];
+    titleView.contentMode = UIViewContentModeScaleAspectFit;
+    titleView.image = [UIImage imageNamed:@"titleLogo"];
+    self.navigationItem.titleView = titleView;
+    
+    // 个人信息页button
+    UIButton* personInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [personInfoBtn setFrame:CGRectMake(0, 0, 24, 24)];
+    [personInfoBtn setImage:[UIImage imageNamed:@"personInfoBtn"] forState:UIControlStateNormal];
+    [personInfoBtn addTarget:self
+                      action:@selector(personInfoAction:)
+            forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* leftBarBtn=[[UIBarButtonItem alloc]initWithCustomView:personInfoBtn];
+    self.navigationItem.leftBarButtonItem=leftBarBtn;
+}
+
+
+/**
+ *  登录页跳转
+ *
+ */
+- (void)personInfoAction:(UIButton *)btn{
+    LoginVC *vc = [[LoginVC alloc]init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+
+/**
+ *  创建tableView
+ *
+ */
+- (void)addTableView{
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0 , 64, kScreenW, kScreenH-64) style:UITableViewStylePlain];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.scrollEnabled =NO;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectZero];
+    
+    [self.view addSubview:_tableView];
+}
+
+#pragma mark - /************************* 获取网络方法 ***************************/
+- (NSArray *)dataArr{
+    if (!_dataArr) {
+        _dataArr = [NSArray array];
+    }
+    return _dataArr;
+}
 
 -(void)infoDic{
     NSDictionary *dataDic = @{
@@ -66,65 +117,33 @@
                                       ]
                               };
     _dataArr = dataDic[@"dataArr"];
-
+    
     
     
     [self.tableView reloadData];
 }
 
-/**
- *  初始化导航栏
- */
--(void)createNav{
-    
-    // 头部logo
-    UIImageView *titleView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 31, 26)];
-    titleView.contentMode = UIViewContentModeScaleAspectFit;
-    titleView.image = [UIImage imageNamed:@"titleLogo"];
-    self.navigationItem.titleView = titleView;
-    
-    // 个人信息页button
-    UIButton* personInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [personInfoBtn setFrame:CGRectMake(0, 0, 24, 24)];
-    [personInfoBtn setImage:[UIImage imageNamed:@"personInfoBtn"] forState:UIControlStateNormal];
-    [personInfoBtn addTarget:self
-                      action:@selector(personInfoAction:)
-            forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem* leftBarBtn=[[UIBarButtonItem alloc]initWithCustomView:personInfoBtn];
-    self.navigationItem.leftBarButtonItem=leftBarBtn;
+
+
+- (void)sendWeatherRequest{
+    NSString *allUrlstring = [NSString stringWithFormat:@"/nc/article/list/T1348649145984/0-20.html"];
+    [self withURL:allUrlstring];
 }
 
 
+- (void)withURL:(NSString *)allUrlstring{
+    [[[HTTPTools sharedWorkTools]GET:allUrlstring parameters:nil success:^(NSURLSessionDataTask *task, NSDictionary* datadic) {
+        NSLog(@"%@",datadic);
+        
+        //            [self.tableView reloadData];
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@",error);
+    }] resume];
+}// ------想把这里改成block来着
 
 
-
-/**
- *  个人信息页跳转
- *
- */
-- (void)personInfoAction:(UIButton *)btn{
-    LoginVC *vc = [[LoginVC alloc]init];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
-    
-}
-
-
-
-- (void)addTableView{
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0 , 64, kScreenW, kScreenH-64) style:UITableViewStylePlain];
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    _tableView.backgroundColor = [UIColor whiteColor];
-    _tableView.scrollEnabled =NO;
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectZero];
-    
-    [self.view addSubview:_tableView];
-}
-
-
+#pragma mark - /************************* tableView数据源方法 ***************************/
 /**
  *  返回几个表头
  */
@@ -164,11 +183,10 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell setSubviews:indexPath];
-//    cell.homeModel = _dataArr[indexPath.row];
+    //    cell.homeModel = _dataArr[indexPath.row];
     HomeModel *user = [HomeModel yy_modelWithJSON:_dataArr[indexPath.row]];
     cell.homeModel = user;
     return cell;
-    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
