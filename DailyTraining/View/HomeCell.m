@@ -63,6 +63,22 @@
         }];
     }
     
+    if(!_xxL){
+        UILabel *titleL = [[UILabel alloc] init];
+        self.xxL = titleL;
+        titleL.textColor = [UIColor hexStringToColor:@"#333333"];
+        titleL.font = [UIFont systemFontOfSize:15];
+        titleL.backgroundColor = [UIColor redColor];
+        [self.contentView addSubview:titleL];
+        [titleL mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(_iconImg.mas_right).offset(20);
+            make.right.equalTo(_numL.mas_left).offset(-10);
+            make.bottom.equalTo(self).offset(-5);
+            make.height.equalTo(@15);
+        }];
+    }
+    
+    
     if (!_line) {
         UIView *line = [[UIView alloc]init];
         self.line = line;

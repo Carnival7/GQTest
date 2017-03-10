@@ -15,11 +15,18 @@
 @interface HomeVC ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UILabel *textL;
 @property (strong,nonatomic) NSArray<HomeModel *> *dataArr;  //数组
+
+@property (nonatomic,strong) HomeInfoModel *homeInfo;
 
 @end
 
 @implementation HomeVC
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self.tableView reloadData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,6 +36,13 @@
     [self addTableView];
     [self infoDic];
     [self sendWeatherRequest];
+    
+    self.homeInfo = [HomeInfoModel new];
+    
+    __weak __typeof(&*self)weakSelf = self;
+    self.textBlock = ^(HomeInfoModel *homeInfo){
+        weakSelf.homeInfo.text = homeInfo.text;
+    };
 }
 
 #pragma mark - /************************* 界面初始化 ***************************/
@@ -72,15 +86,27 @@
  */
 - (void)addTableView{
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0 , 64, kScreenW, kScreenH-64) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0 , 64, kScreenW, kScreenH-64-100) style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.scrollEnabled =NO;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectZero];
-    
     [self.view addSubview:_tableView];
+    
+//    UILabel *titleL = [[UILabel alloc] init];
+//    titleL.textColor = [UIColor hexStringToColor:@"#333333"];
+//    titleL.font = [UIFont systemFontOfSize:15];
+//    titleL.backgroundColor = [UIColor redColor];
+//    titleL.text = self.homeInfo.text;;
+//    [self.view addSubview:titleL];
+//    [titleL mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.view).offset(20);
+//        make.right.equalTo(self.view).offset(-20);
+//        make.bottom.equalTo(self.view).offset(-20);
+//        make.height.equalTo(@15);
+//    }];
 }
 
 #pragma mark - /************************* 获取网络方法 ***************************/
@@ -182,6 +208,7 @@
         cell = [[HomeCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.xxL.text = self.homeInfo.text;
     [cell setSubviews:indexPath];
     //    cell.homeModel = _dataArr[indexPath.row];
     HomeModel *user = [HomeModel yy_modelWithJSON:_dataArr[indexPath.row]];
@@ -200,6 +227,8 @@
     vc.hidesBottomBarWhenPushed = YES;
     vc.titleStr = title;
     vc.iconImg = img;
+    vc.homeInfo = self.homeInfo;
+    vc.textBlock = self.textBlock;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

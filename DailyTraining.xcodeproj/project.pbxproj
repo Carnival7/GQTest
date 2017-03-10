@@ -22,6 +22,7 @@
 		2C0DEE0F1E723C0B008ACD6C /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0DEE051E723C0B008ACD6C /* AFURLResponseSerialization.m */; };
 		2C0DEE101E723C0B008ACD6C /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0DEE071E723C0B008ACD6C /* AFURLSessionManager.m */; };
 		2C0DEE141E72405C008ACD6C /* ZYKeyboardUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0DEE131E72405C008ACD6C /* ZYKeyboardUtil.m */; };
+		2C0DEE171E724A9F008ACD6C /* HomeInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0DEE161E724A9F008ACD6C /* HomeInfoModel.m */; };
 		2C1B96201E6F979F00433957 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B961F1E6F979F00433957 /* main.m */; };
 		2C1B96231E6F979F00433957 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B96221E6F979F00433957 /* AppDelegate.m */; };
 		2C1B96261E6F979F00433957 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B96251E6F979F00433957 /* ViewController.m */; };
@@ -119,6 +120,8 @@
 		2C0DEE071E723C0B008ACD6C /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		2C0DEE121E72405C008ACD6C /* ZYKeyboardUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYKeyboardUtil.h; sourceTree = "<group>"; };
 		2C0DEE131E72405C008ACD6C /* ZYKeyboardUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYKeyboardUtil.m; sourceTree = "<group>"; };
+		2C0DEE151E724A9F008ACD6C /* HomeInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeInfoModel.h; sourceTree = "<group>"; };
+		2C0DEE161E724A9F008ACD6C /* HomeInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeInfoModel.m; sourceTree = "<group>"; };
 		2C1B961B1E6F979F00433957 /* DailyTraining.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyTraining.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C1B961F1E6F979F00433957 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2C1B96211E6F979F00433957 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -400,6 +403,8 @@
 			children = (
 				2C1B98691E6FF06800433957 /* HomeModel.h */,
 				2C1B986A1E6FF06800433957 /* HomeModel.m */,
+				2C0DEE151E724A9F008ACD6C /* HomeInfoModel.h */,
+				2C0DEE161E724A9F008ACD6C /* HomeInfoModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -700,6 +705,7 @@
 				2C1B96FC1E6F9C8800433957 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				2C1B980D1E6FD03400433957 /* DDTabBarControllerConfig.m in Sources */,
 				2C0DEE0F1E723C0B008ACD6C /* AFURLResponseSerialization.m in Sources */,
+				2C0DEE171E724A9F008ACD6C /* HomeInfoModel.m in Sources */,
 				18E670321E70430000163276 /* YYClassInfo.m in Sources */,
 				2C1B980B1E6FD03400433957 /* DDTabBar.m in Sources */,
 				2C1B96261E6F979F00433957 /* ViewController.m in Sources */,

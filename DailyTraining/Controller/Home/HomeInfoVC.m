@@ -12,7 +12,6 @@
 #define MARGIN_KEYBOARD 10
 
 @interface HomeInfoVC ()<UITextFieldDelegate>
-@property (nonatomic, strong) UITextField *bottomText;
 @property (strong, nonatomic) ZYKeyboardUtil *keyboardUtil;
 @end
 
@@ -22,11 +21,38 @@
     [super viewDidLoad];
 
     [self addView];
+    [self createBack];
     [self configKeyBoardRespond];
 }
 
 - (void)dealloc {
     self.bottomText.delegate = nil;
+}
+
+/**
+ *  返回btn初始化
+ */
+-(void)createBack{
+    UIButton* backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setFrame:CGRectMake(0, 0, 30, 24)];
+    UIImage *backButtonImage = [[UIImage imageNamed:@"back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 30, 0)];
+    [backBtn setImage:backButtonImage forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem* leftBarBtn=[[UIBarButtonItem alloc]initWithCustomView:backBtn];
+    UIBarButtonItem *fixedSpaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    [fixedSpaceItem setWidth:-10];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] init];
+    self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:fixedSpaceItem,leftBarBtn,nil];
+}
+
+-(void)backBtnAction:(UIButton *)btn{
+    NSString *text = [_bottomText.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    _homeInfo.text = self.homeInfo.text;
+    if (_textBlock) {
+        _textBlock(_homeInfo);
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)addView{
@@ -69,6 +95,10 @@
     _bottomText.layer.borderWidth = 1.0f;
     _bottomText.layer.cornerRadius = 2;
     _bottomText.layer.borderColor = [UIColor hexStringToColor:@"#cccccc"].CGColor;
+    
+    _bottomText.text = self.homeInfo.text;
+    self.homeInfo.text = _bottomText.text;
+    
     [self.view addSubview:_bottomText];
     [_bottomText mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view).offset(-20);
@@ -100,6 +130,15 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self.bottomText resignFirstResponder];
+    return YES;
+}
+
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    if ([textField isEqual:_bottomText]) {
+        _bottomText.text = [_bottomText.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        self.homeInfo.text = _bottomText.text;
+
+    }
     return YES;
 }
 

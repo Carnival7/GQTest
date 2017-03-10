@@ -7,10 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HomeInfoModel.h"
+
+typedef void(^TextBackBlock)(HomeInfoModel *text);
+
+//typedef void(^TextBackBlock)(NSString *text);
 
 @interface HomeInfoVC : UIViewController
 
 @property (nonatomic, strong)NSString * iconImg;
 @property (nonatomic,strong)NSString *titleStr;
+@property (nonatomic, strong) UITextField *bottomText;
+@property (nonatomic,strong) HomeInfoModel *homeInfo;
+@property (nonatomic,strong) TextBackBlock textBlock;
 
 @end

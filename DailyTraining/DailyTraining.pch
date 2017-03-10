@@ -9,6 +9,12 @@
 #ifndef DailyTraining_pch
 #define DailyTraining_pch
 
+//iOS系统版本
+#define ios8x [[[UIDevice currentDevice] systemVersion] floatValue] >=8.0f
+#define ios7x ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f) && ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0f)
+#define ios6x [[[UIDevice currentDevice] systemVersion] floatValue] < 7.0f
+#define iosNot6x [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f
+
 //屏幕适配
 #define iphone4x_3_5 ([UIScreen mainScreen].bounds.size.height==480.0f)
 #define iphone5x_4_0 ([UIScreen mainScreen].bounds.size.height==568.0f)

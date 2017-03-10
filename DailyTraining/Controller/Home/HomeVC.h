@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HomeInfoModel.h"
 
+typedef void(^TextBackBlock)(HomeInfoModel *text);
 @interface HomeVC : UIViewController
+
+@property (nonatomic,strong) TextBackBlock textBlock;
 
 @end

@@ -15,6 +15,7 @@
 @property (nonatomic,strong)UILabel *titleL;
 @property (nonatomic,strong)UILabel *numL;
 @property (nonatomic, strong)UIView * line;
+@property (nonatomic, strong) UILabel *xxL;
 
 @property (nonatomic,strong)HomeModel *homeModel;
 
